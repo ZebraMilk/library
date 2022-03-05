@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="./script.js" defer></script>
+    <title>The Library</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <header class="top">
+        <h1 class="title">
+          Vashta Nerada
+        </h1>
+        <p class="subtitle">
+          The largest library in the Universe.
+        </p>
+      </header>
+      <form action="https://httpbin.org/post" method="post">
+
+        <div class="form-fields">
+          <div class="form-field">
+            <label for="title">Title:</label>
+            <input type="text" name="book" id="title" required>
+          </div>
+          <div class="form-field">
+            <label for="author">Author:</label>
+            <input type="text" name="book" id="author" required>
+          </div>
+          <div class="form-field">
+            <label for="published">Published:</label>
+            <input type="tel" name="book" id="published">
+          </div>
+          <div class="form-field">
+            <label for="pages">Pages:</label>
+            <input type="tel" name="book" id="pages" required>
+          </div>
+          <div class="form-field">
+            <label for="isRead">Read:</label>
+            <input type="checkbox" name="book" id="isRead">
+          </div>
+        </div>
+        <button type="button" id="submit">
+          Add Book to Library
+        </button>
+
+
+      </form>
+      <div class="display">
+        
+      </div>
+    </div>
+  </body>
+
+</html>

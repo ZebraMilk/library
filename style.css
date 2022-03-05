@@ -1,0 +1,53 @@
+:root {
+  font-size: 20px;
+  color: aliceblue;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: rgb(46, 38, 38);
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  height: 100vh;
+  width: 60vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form {
+  display: grid;
+  grid-template-rows: 1fr 2rem;
+}
+
+.form-fields {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) 1rem;
+  column-gap: 10px;
+}
+
+.form-field {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+#submit {
+  width: fit-content;
+  height: fit-content;
+  justify-self: center;
+}
+
+.display {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rebeccapurple;
+}
