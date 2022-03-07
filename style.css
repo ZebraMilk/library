@@ -47,8 +47,32 @@ form {
 }
 
 .display {
-  
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   border: 1px solid rebeccapurple;
+}
+
+.library-book {
+  padding: .5rem 1rem;
+  border: 1px solid orange;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-flow: column;
+}
+
+.is-read-toggle {
+  color: rgb(0, 0, 0);
+  font-size: .8rem;
+  font-weight: 500;
+  background-color: rgb(255, 154, 154);
+  border-style: none;
+  border-radius: 8px;
+  padding: .2rem 0;
+  width: 6rem;
+}
+
+.is-read-toggle .read {
+  background-color: rgb(107, 255, 107);
 }

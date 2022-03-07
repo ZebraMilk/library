@@ -1,5 +1,4 @@
-const myLibrary = [];
-let arrayLength = 0;
+let myLibrary = [];
 
 function Book(title, author, published, pages, isRead) {
   this.title = title;
@@ -15,110 +14,91 @@ Book.prototype = {
   }
 };
 
+// get the input fields to play with
+const titleField = document.getElementById("title");
+const authorField = document.getElementById("author");
+const publishedField = document.getElementById("published");
+const pagesField = document.getElementById("pages");
+const isReadField = document.getElementById("isRead");
+
 
 const display = document.querySelector(".display");
+display.addEventListener("click", (e) => toggleIsRead(e));
+
+// Get the submit button for listener
 const submit = document.querySelector("#submit");
-const form = document.querySelector(".form-fields");
 
-submit.addEventListener("click", addBook());
+// Get input fields for clear function
+const formFields = document.querySelectorAll("input");
 
+submit.addEventListener("click", () => addBook(getBookInfo()));
 
-// 1. User enters data into the form
-//   - Validate published and pages if they include it.
-//   - Mark the required fields with an asterisk
-
-
-
-// 2. Button click
-//     - validate there is a Title and an Author
-//     - passes the form data into a function
-//     - clears the forms
-
-// 3. take the data from the forms
-//     let newBook
-//     For each field
-//         store user input in a variable
-//         assign the variable to the corresponding newBook property
-//     add newBook to library
+// Make a new Book object using the user input fields
 function getBookInfo() {
-  let title1 = document.getElementById("title").value;
-  let author1 = document.getElementById("author").value;
-  let published1 = document.getElementById("published").value;
-  let pages1 = document.getElementById("pages").value;
-  let isRead1 = document.getElementById("isRead").value;
-  
-  // let bookTitle = toCamelCase(title);
-  let newBook = new Book(`${title1}`, `${author1}`, `${published1}`, `${pages1}`, `${isRead1}`);
-  console.table(newBook);
+  // validateForm()
+  let newBook = new Book(titleField.value, authorField.value, publishedField.value, pagesField.value, isReadField.checked);
   return newBook;
-}
-
-// 4. addBook
-function addBook() {
-  addBookToLibrary(getBookInfo());
-  console.table(myLibrary);
-}
-//     if no books in Library
-//         library[0] is newBook
-//     at myLibrary[length] (?)
-//     or just concat
-//         newBook
-
-// 5. make new card(takes a Book as an argument)
-//     - make a div with
-//         - 4 containers
-//         - auto-columns for the buttons I will add
-//             - delete button (removes book)
-//             - isRead button (red or green depending)
-//     - set the innerText of each column to the approrpiate property
-
-// 6. remove book
-//     - slice/splice the array before and after the button clicked
-//     - remove the div containing that book
-//     - update the attributes on each remaining book-card/row to reflect the new size of the myLibrary array
-
-// 7. clear forms
-//     - set the input fields back to their defaults
-// 8. updateLibrary
-
-//     updateLibraryDisplay
-
-
-
-//     bonus: Move the cards around, reorder the list/table/cards
-
-
-
-
-const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 1937, 295, true);
-const ulysses = new Book("Ulysses", "James Joyce", 1922, 730, true);
-const bloodBonesButter = new Book("Blood, Bones & Butter", "Gabrielle Hamilton", 2012, 320, false);
-
-// addBookToLibrary(theHobbit, 0);
-// addBookToLibrary(ulysses, 1);
-// addBookToLibrary(bloodBonesButter, 2);
-
-// console.table(myLibrary);
-
-// myLibrary.forEach(book => {
-//   console.log(book.info());
-// });
-
-
-
-function addBookToLibrary(book) {
-  if(!myLibrary[0]) {
-    myLibrary[0] = book;
-  } else {
-    myLibrary.push(book);
-  };
 };
 
-  function toCamelCase(str)  {
-    return str
-       .replace(/[^a-z0-9]/gi, ' ')
-       .toLowerCase()
-       .split(' ')
-       .map((el, ind) => ind === 0 ? el : el[0].toUpperCase() + el.substring(1, el.length))
-       .join('');
-  };
+// Add the book to the end of myLibrary
+function addBook(book) {
+  myLibrary.push(book);
+  makeCard(book);
+  clearFields();
+};
+
+// Construct and populates a new "card" containing the information about the book
+function makeCard(book) {
+  
+  const newTitle = document.createElement("h3");
+  newTitle.innerText = `${book.title}`;
+
+  const newAuthor = document.createElement("h4");
+  newAuthor.innerText = `${book.author}`;
+  
+  const newPublished = document.createElement("h5");
+  newPublished.innerText = `${book.published}`;
+  
+  const newPages = document.createElement("h6");
+  newPages.innerText = `${book.pages}`;
+  
+  const newIsRead = document.createElement("button");
+  newIsRead.classList.add("is-read-toggle");
+  newIsRead.innerText = (book.isRead === true ? "Read" : "Unread");
+  
+  const newCard = document.createElement("div");
+  newCard.classList.add("library-book");
+  newCard.appendChild(newTitle);
+  newCard.appendChild(newAuthor);
+  newCard.appendChild(newPublished);
+  newCard.appendChild(newPages);
+  newCard.appendChild(newIsRead);
+
+  display.appendChild(newCard);
+}
+
+function toggleIsRead(e) {
+  e.preventDefault();
+  if (e.target.classListInc "is-read-toggle") {
+    e.target.classList.toggle("read")
+  }
+}
+
+
+// function validateForm()
+
+// Reset all user-input fields to blank, except checkbox
+function clearFields() {
+  formFields.forEach(function (field) {
+    field.value = " ";
+  });
+};
+
+// function toCamelCase(str) {
+//   return str
+//     .replace(/[^a-z0-9]/gi, ' ')
+//     .toLowerCase()
+//     .split(' ')
+//     .map((el, ind) => ind === 0 ? el : el[0].toUpperCase() + el.substring(1, el.length))
+//     .join('');
+// };
