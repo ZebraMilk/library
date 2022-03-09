@@ -225,3 +225,13 @@ Now... If I write an updateDisplay function that
 ## Fun bugs
 - when either the remove button or the read button is clicked, I get a TypeError
     - Cannot read properties of undefined (reading toggleIsReadBook)
+
+
+
+Okay, my approach was targeting an element that actually didn't have the dataset property, I ned to target its parent element to get the data-index and then use that value
+
+
+
+
+MORE BUGS
+Likely the last one, when removeing books, the book.index value is not updated, so it's possible to have a collision

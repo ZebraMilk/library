@@ -12,7 +12,7 @@ function Book(title, author, published, pages, isRead, index) {
 Book.prototype = {
   // More specifically, toggles the isRead status of the book object
   toggleIsReadBook() {
-    this.isread === true ? (this.isRead = false) : (this.isRead = true);
+    this.isread ? (this.isRead = false) : (this.isRead = true);
     // return this.isRead;
   }
 };
@@ -97,31 +97,29 @@ function makeCard(book) {
 // function that gates any clicks on the display element
 function handleDisplayClick(e) {
   e.stopPropagation();
-  console.log(e.target.dataset);
   if (e.target.classList.contains("is-read-toggle")) {
     // Pass the event along to track its target and toggle that specific card
     toggleIsRead(e);
   } else if (e.target.classList.contains("remove")) {
-    console.log(e.target.dataset);
-    removeBook(myLibrary[e.target.getAttribute("data-index")])
+    removeBook(e.target.parentNode.getAttribute("data-index"))
   };
 };
 
 
 
 // removes a book from anywhere in the array
-function removeBook(book) {
-  console.log(book);
-  myLibrary.splice(book.index, 1);
-  console.table(myLibrary);
+function removeBook(index) {
+  myLibrary.splice(index, 1);
+  clearLibraryDisplay();
+  displayLibrary();
 };
 
 // changes and updates the displayed isRead and the isRead property on the book
 function toggleIsRead(e) {
   // First change the object property
-  myLibrary[e.target.getAttribute("data-index")].toggleIsReadBook();
+  myLibrary[e.target.parentNode.getAttribute("data-index")].toggleIsReadBook();
   // Then toggle the class on the div
-  e.classList.toggle("read")
+  e.target.classList.toggle("read")
   // Update the button text
   if (e.target.classList.contains("read")) {
     e.target.innerText = "Read";
@@ -142,7 +140,7 @@ function displayLibrary() {
 // Reset all user-input fields to blank, except checkbox
 function clearFields() {
   formFields.forEach(function (field) {
-    field.value = " ";
+    field.value = "";
   });
 };
 
