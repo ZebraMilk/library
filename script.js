@@ -83,8 +83,8 @@ function makeCard(book) {
   newCard.appendChild(newAuthor);
   newCard.appendChild(newPublished);
   newCard.appendChild(newPages);
-  newCard.appendChild(remove)
   newCard.appendChild(newIsRead);
+  newCard.appendChild(remove)
   // Give the card an index 
   newCard.setAttribute("data-index", myLibrary.indexOf(book))
   // Finally, add the card to the display

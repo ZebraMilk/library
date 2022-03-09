@@ -259,4 +259,10 @@ GOT IT! I used the indexOf(book) and managed to get rid of needing book[index] a
 
 ## Refactoring/Next steps
 
-There are plenty of places where my code is a bit too verbose
+There are plenty of places where my code is a bit too verbose. 
+First, I am going to style things
+- Set up color variables in CSS from 'lime' and 'orange' tailwind palettes
+- tweak the look of the form fields
+- adjust font
+- set a background image designed for mobile first
+- fix the form field container so they stack more vertically on a mobile screen
