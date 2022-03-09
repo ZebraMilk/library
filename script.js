@@ -10,9 +10,10 @@ function Book(title, author, published, pages, isRead, index) {
 };
 
 Book.prototype = {
-    info() {
-      return `${this.title} by ${this.author}, ${this.pages} pages, published in ${this.published}, ${this.isRead ? "read" : "not read yet"}.`
-    }
+  toggleIsReadBook() {
+    this.isread === true ? (this.isRead = false) : (this.isRead = true);
+    // return this.isRead;
+  }
 };
 
 // get the input fields to play with
@@ -24,7 +25,7 @@ const isReadField = document.getElementById("isRead");
 
 
 const display = document.querySelector(".display");
-display.addEventListener("click", (e) => toggleIsRead(e));
+display.addEventListener("click", (e) => handleDisplayClick(e));
 
 // Get the submit button for listener
 const submit = document.querySelector("#submit");
@@ -35,8 +36,7 @@ clear.addEventListener("click", () => clearLibrary());
 
 // Get input fields for clear function
 const formFields = document.querySelectorAll("input");
-
-submit.addEventListener("click", () => addBook(getBookInfo()));
+submit.addEventListener("click", () => addBookToLibrary(getBookInfo()));
 
 // Make a new Book object using the user input fields
 function getBookInfo() {
@@ -46,27 +46,29 @@ function getBookInfo() {
 };
 
 // Add the book to the end of myLibrary
-function addBook(book) {
+function addBookToLibrary(book) {
   myLibrary.push(book);
-  makeCard(book);
+  // makeCard(book);
+  clearLibraryDisplay();
+  displayLibrary();
   clearFields();
 };
 
 // Construct and populates a new "card" containing the information about the book
 function makeCard(book) {
-  
+
   const newTitle = document.createElement("h3");
   newTitle.innerText = book.title;
 
   const newAuthor = document.createElement("h4");
   newAuthor.innerText = book.author;
-  
+
   const newPublished = document.createElement("h5");
   newPublished.innerText = book.published;
-  
+
   const newPages = document.createElement("h6");
   newPages.innerText = book.pages;
-  
+
   const remove = document.createElement("button");
   remove.classList.add("remove");
   remove.innerText = "X";
@@ -75,7 +77,7 @@ function makeCard(book) {
   newIsRead.classList.add("is-read-toggle");
   // Convert isRead boolean to natural language
   newIsRead.innerText = (book.isRead === true ? "Read" : "Unread");
-  
+
   const newCard = document.createElement("div");
   newCard.classList.add("library-book");
   // Add them allllll to the card
@@ -94,25 +96,40 @@ function makeCard(book) {
 
 
 
+// function that gates any clicks on the display element
+function handleDisplayClick(e) {
+  e.stopPropagation();
+  if (e.target.classList.contains("is-read-toggle")) {
+    toggleIsRead(e);
+  } else if (e.target.classList.contains("remove")) {
+    removeBook(myLibrary[e.target.dataset.index])
+  };
+};
 
 
 
-
-
-
+// removes a book from anywhere in the array
+function removeBook(book) {
+  myLibrary.splice(book.index, 1);
+  console.table(myLibrary);
+};
 
 
 function toggleIsRead(e) {
-  e.stopPropagation();
-  if (e.target.classList.contains("is-read-toggle")) {
-    e.target.classList.toggle("read")
-
-    if(e.target.classList.contains("read")) {
-      e.target.innerText = "Read";
-      return;
-    };
-    e.target.innerText = "Unread";
+  e.target.classList.toggle("read")
+  myLibrary[e.target.dataset.index].toggleIsReadBook();
+  if (e.target.classList.contains("read")) {
+    e.target.innerText = "Read";
+    return;
   };
+  e.target.innerText = "Unread";
+};
+
+
+
+// Update the display with divs containing all the books currently in the Library
+function displayLibrary() {
+  myLibrary.forEach(book => makeCard(book));
 };
 
 // function validateForm()
@@ -130,14 +147,12 @@ function clearLibrary() {
     display.lastElementChild.remove();
     // Also removed the book from the library Array, hidden from the user.
     myLibrary.pop();
-  }
-}
+  };
+};
 
-// function toCamelCase(str) {
-//   return str
-//     .replace(/[^a-z0-9]/gi, ' ')
-//     .toLowerCase()
-//     .split(' ')
-//     .map((el, ind) => ind === 0 ? el : el[0].toUpperCase() + el.substring(1, el.length))
-//     .join('');
-// };
+// Remove just the display elements of the library whie leaving the array untrouched
+function clearLibraryDisplay() {
+  while (display.lastElementChild) {
+    display.lastElementChild.remove();
+  };
+};

@@ -1,3 +1,9 @@
+
+
+# Project Specs
+
+***
+
 1.  If you haven’t already, set up your project with skeleton HTML/CSS and JS files.
 2.  All of your book objects are going to be stored in a simple array, so add a function to the script (not the constructor) that can take user’s input and store the new book objects into an array. Your code should look something like this:
     
@@ -21,7 +27,9 @@
     1.  To facilitate this you will want to create the function that toggles a book’s `read` status on your `Book` prototype instance.
 
 ***
+
 # Project Notes
+
 do this project twice, once with a mobile focus using list and table elements
 second time with a desktop focus, using cards, perhaps a carousel approach? Or using grid/flexbox to introduce the cards.
 
@@ -170,9 +178,35 @@ Tonight:
 
 ### Remove button and function
 What does it do?
-- removes the book pointed to by the div from myLibrary
+- removes the book pointed to by the div from `myLibrary`
 - 
 - removes the div containing the book with 
+
+
+
+
+### `toggleIsReadBook` function
+It's a part of the Book prototype, so I can call it on any of the books in `myLibrary`.
+
+When it is called, what does it do?
+  It toggles the isRead boolean value also on `this`
+  Then it calls...
+
+
+Do I want to remove the display div with this book first, and then remove it from the library?
+-OR-
+Do I want to delete the book from the Library first and then remove its div from the display?
+
+
+
+Now... If I change write an updateDisplay function that
+  clears the display (but does *not* remove them from the Library)
+    (pop out the pop book function from the clearLibrary function s)
+
+
+    Could also make a function that cycles throught the library andadds the books to the display
+    THis way might make it easier to do something like delete a book from the middle of the library display....
+
 
 
 
@@ -185,4 +219,4 @@ What does it do?
 
 ### Bonus functions
 - Validate the user input
-- Move the "cards"
+- Move the "cards" around on the page/in the library
