@@ -199,13 +199,11 @@ Do I want to delete the book from the Library first and then remove its div from
 
 
 
-Now... If I change write an updateDisplay function that
+Now... If I write an updateDisplay function that
   clears the display (but does *not* remove them from the Library)
-    (pop out the pop book function from the clearLibrary function s)
 
-
-    Could also make a function that cycles throught the library andadds the books to the display
-    THis way might make it easier to do something like delete a book from the middle of the library display....
+    Could also make a function that cycles through the library and adds the books to the display
+    THis way might make it easier to do something like delete a book from the middle of the library display/array....
 
 
 
@@ -220,3 +218,10 @@ Now... If I change write an updateDisplay function that
 ### Bonus functions
 - Validate the user input
 - Move the "cards" around on the page/in the library
+
+***
+
+# 3-9
+## Fun bugs
+- when either the remove button or the read button is clicked, I get a TypeError
+    - Cannot read properties of undefined (reading toggleIsReadBook)

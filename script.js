@@ -6,10 +6,11 @@ function Book(title, author, published, pages, isRead, index) {
   this.published = published;
   this.pages = pages;
   this.isRead = isRead;
-  this.index = index;
+  this.index = index
 };
 
 Book.prototype = {
+  // More specifically, toggles the isRead status of the book object
   toggleIsReadBook() {
     this.isread === true ? (this.isRead = false) : (this.isRead = true);
     // return this.isRead;
@@ -48,7 +49,6 @@ function getBookInfo() {
 // Add the book to the end of myLibrary
 function addBookToLibrary(book) {
   myLibrary.push(book);
-  // makeCard(book);
   clearLibraryDisplay();
   displayLibrary();
   clearFields();
@@ -89,20 +89,21 @@ function makeCard(book) {
   newCard.appendChild(newIsRead);
   // Give the card an index 
   newCard.setAttribute("data-index", book.index)
-
+  // Finally, add the card to the display
   display.appendChild(newCard);
 }
-
-
 
 
 // function that gates any clicks on the display element
 function handleDisplayClick(e) {
   e.stopPropagation();
+  console.log(e.target.dataset);
   if (e.target.classList.contains("is-read-toggle")) {
+    // Pass the event along to track its target and toggle that specific card
     toggleIsRead(e);
   } else if (e.target.classList.contains("remove")) {
-    removeBook(myLibrary[e.target.dataset.index])
+    console.log(e.target.dataset);
+    removeBook(myLibrary[e.target.getAttribute("data-index")])
   };
 };
 
@@ -110,14 +111,18 @@ function handleDisplayClick(e) {
 
 // removes a book from anywhere in the array
 function removeBook(book) {
+  console.log(book);
   myLibrary.splice(book.index, 1);
   console.table(myLibrary);
 };
 
-
+// changes and updates the displayed isRead and the isRead property on the book
 function toggleIsRead(e) {
-  e.target.classList.toggle("read")
-  myLibrary[e.target.dataset.index].toggleIsReadBook();
+  // First change the object property
+  myLibrary[e.target.getAttribute("data-index")].toggleIsReadBook();
+  // Then toggle the class on the div
+  e.classList.toggle("read")
+  // Update the button text
   if (e.target.classList.contains("read")) {
     e.target.innerText = "Read";
     return;
@@ -143,11 +148,9 @@ function clearFields() {
 
 // remove all books from the screen and the myLibrary Array
 function clearLibrary() {
-  while (display.lastElementChild) {
-    display.lastElementChild.remove();
-    // Also removed the book from the library Array, hidden from the user.
-    myLibrary.pop();
-  };
+  clearLibraryDisplay();
+  // Also removed the book from the library Array, hidden from the user.
+  myLibrary = [];
 };
 
 // Remove just the display elements of the library whie leaving the array untrouched
