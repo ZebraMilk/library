@@ -6,14 +6,12 @@ function Book(title, author, published, pages, isRead, index) {
   this.published = published;
   this.pages = pages;
   this.isRead = isRead;
-  this.index = index
 };
 
 Book.prototype = {
   // More specifically, toggles the isRead status of the book object
   toggleIsReadBook() {
-    this.isread ? (this.isRead = false) : (this.isRead = true);
-    // return this.isRead;
+    this.isRead === true ? this.isRead = false : this.isRead = true;
   }
 };
 
@@ -24,12 +22,13 @@ const publishedField = document.getElementById("published");
 const pagesField = document.getElementById("pages");
 const isReadField = document.getElementById("isRead");
 
-
+// Grab the display and add a listner to handle some clicks
 const display = document.querySelector(".display");
 display.addEventListener("click", (e) => handleDisplayClick(e));
 
 // Get the submit button for listener
 const submit = document.querySelector("#submit");
+submit.addEventListener("click", () => validateForm() ? addBookToLibrary(getBookInfo()) : false);
 
 // Grab the clear library button to play with
 const clear = document.querySelector("#clear-library");
@@ -37,14 +36,7 @@ clear.addEventListener("click", () => clearLibrary());
 
 // Get input fields for clear function
 const formFields = document.querySelectorAll("input");
-submit.addEventListener("click", () => addBookToLibrary(getBookInfo()));
 
-// Make a new Book object using the user input fields
-function getBookInfo() {
-  // validateForm()
-  let newBook = new Book(titleField.value, authorField.value, publishedField.value, pagesField.value, isReadField.checked, myLibrary.length);
-  return newBook;
-};
 
 // Add the book to the end of myLibrary
 function addBookToLibrary(book) {
@@ -52,6 +44,12 @@ function addBookToLibrary(book) {
   clearLibraryDisplay();
   displayLibrary();
   clearFields();
+};
+
+// Make a new Book object using the user input fields
+function getBookInfo() {
+  let newBook = new Book(titleField.value, authorField.value, publishedField.value, pagesField.value, isReadField.checked);
+  return newBook;
 };
 
 // Construct and populates a new "card" containing the information about the book
@@ -88,11 +86,10 @@ function makeCard(book) {
   newCard.appendChild(remove)
   newCard.appendChild(newIsRead);
   // Give the card an index 
-  newCard.setAttribute("data-index", book.index)
+  newCard.setAttribute("data-index", myLibrary.indexOf(book))
   // Finally, add the card to the display
   display.appendChild(newCard);
 }
-
 
 // function that gates any clicks on the display element
 function handleDisplayClick(e) {
@@ -103,15 +100,6 @@ function handleDisplayClick(e) {
   } else if (e.target.classList.contains("remove")) {
     removeBook(e.target.parentNode.getAttribute("data-index"))
   };
-};
-
-
-
-// removes a book from anywhere in the array
-function removeBook(index) {
-  myLibrary.splice(index, 1);
-  clearLibraryDisplay();
-  displayLibrary();
 };
 
 // changes and updates the displayed isRead and the isRead property on the book
@@ -128,14 +116,36 @@ function toggleIsRead(e) {
   e.target.innerText = "Unread";
 };
 
+// removes a book from anywhere in the array, updating the display after
+function removeBook(index) {
+  myLibrary.splice(index, 1);
+  clearLibraryDisplay();
+  displayLibrary();
+};
 
+// Verify the user data matches the types expected
+function validateForm() {
+  // Check Title
+  if (titleField.value === "" || authorField.value === "") {
+    alert("You must enter a Title and Author, at least.");
+    return false;
+  };
+  // Published/pages are optional, but make sure they are date/digits
+  if (typeof(parseInt(publishedField.value)) !== "number") {
+    alert("Published date must be a valid year in which people were writing books");
+    return false;
+  };
+  if (typeof(parseInt(pagesField.value)) !== "number") {
+    alert("Page count must be a number, this isn't high-school algebra");
+    return false;
+  };
+  return true;
+};
 
 // Update the display with divs containing all the books currently in the Library
 function displayLibrary() {
   myLibrary.forEach(book => makeCard(book));
 };
-
-// function validateForm()
 
 // Reset all user-input fields to blank, except checkbox
 function clearFields() {

@@ -40,11 +40,14 @@ Listen to the buttons, have JS populate the DOM almost entirely, use only a basi
 Start by making one, solid.
 Basically checking a different button transitions to a different format, relies on enitrely different JS code (gated by a big `if` statement)
 
-# First, do mobile
+## First, do mobile
+
 use rows added to the DOM for each book
 
 ## Project outline
+
 ### HTML/CSS page framework
+
 header with bit of box-shadow
   Title/Logo
 Main Container
@@ -68,10 +71,12 @@ Main Container
 
 
 ## Fun things to note
+
 - need to set a default value in the Book prototype, so the user can avoid optional fields?
 - need a way to set attribute ids that correspond to each element's place in the array, myLibrary
 
 ## Functions
+
 1. User enters data into the form
   - Validate published and pages if they include it.
   - Mark the required fields with an asterisk
@@ -121,6 +126,7 @@ Main Container
 
             
 ## Basic Functions
+
 - accurately get all the data entered into the forms, store them in variables
     - console.table those variables to check
 - 
@@ -128,7 +134,7 @@ Main Container
 
 
 
-Okay, so I have the getBookINfo working
+Okay, so I have the getBookInfo working
 Also addBook working
 
 
@@ -159,7 +165,7 @@ In my mind, the latter is more performant, but the former is easier to implement
 There might be a way to make the addCard function iterate inside, doing a forEach using each element's .value?
 
 
-use h3-6 for the card displays
+use h3-6 for the card displays to make styling easier
 
 
 
@@ -217,21 +223,40 @@ Now... If I write an updateDisplay function that
 
 ### Bonus functions
 - Validate the user input
+- Edit current library books being displayed!
 - Move the "cards" around on the page/in the library
 
 ***
 
 # 3-9
+
 ## Fun bugs
+
 - when either the remove button or the read button is clicked, I get a TypeError
     - Cannot read properties of undefined (reading toggleIsReadBook)
+    - 
+#### Resolution:
+
+Okay, my approach was targeting an element that actually didn't have the dataset property, I need to target its parent element to get the data-index and then use that value. 
+
+I can do so by using `e.target.parentNode.getAttribute()`, which is sorta ugly, but pretty clear in what it is doing.
 
 
 
-Okay, my approach was targeting an element that actually didn't have the dataset property, I ned to target its parent element to get the data-index and then use that value
+
+## MORE BUGS
+
+- When removing books, the book.index value is not updated, so it's possible to have a collision.
 
 
+### Possible solutions:
 
+- How do I get access to the index of something? Do I need to name each object stored in the myLibrary array something other thatn their index?
 
-MORE BUGS
-Likely the last one, when removeing books, the book.index value is not updated, so it's possible to have a collision
+GOT IT! I used the indexOf(book) and managed to get rid of needing book[index] at all.
+
+***
+
+## Refactoring/Next steps
+
+There are plenty of places where my code is a bit too verbose
