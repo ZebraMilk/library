@@ -157,7 +157,7 @@ function clearFields() {
 // remove all books from the screen and the myLibrary Array
 function clearLibrary() {
   clearLibraryDisplay();
-  // Also removed the book from the library Array, hidden from the user.
+  // Also removed the books from the library Array, hidden from the user.
   myLibrary = [];
 };
 
