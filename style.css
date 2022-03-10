@@ -1,11 +1,11 @@
 :root {
   font-size: 20px;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  --background-green: #365314;
-  --background-orange: #7c2d12;
+  --background-green: #586f7c;
+  --background-orange: #592941;
   --button-green: #65a30d;
   --button-red: #dc2626;
-  --text-orange: #fdba74;
+  --text-orange: #271033;
   --text-green: #d9f99d;
   --accent-green: #a3e635;
   --form-background: #f7fee7;
