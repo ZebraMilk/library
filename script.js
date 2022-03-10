@@ -75,6 +75,9 @@ function makeCard(book) {
   newIsRead.classList.add("is-read-toggle");
   // Convert isRead boolean to natural language
   newIsRead.innerText = (book.isRead === true ? "Read" : "Unread");
+  if (book.isRead) {
+    newIsRead.classList.add("read")
+  };
 
   const newCard = document.createElement("div");
   newCard.classList.add("library-book");
