@@ -133,15 +133,6 @@ function validateForm() {
     alert("You must enter a Title and Author, at least.");
     return false;
   };
-  // // Published/pages are optional, but make sure they are date/digits
-  // if (typeof(parseInt(publishedField.value)) != "number") {
-  //   alert("Published date must be a valid year in which people were writing books");
-  //   return false;
-  // };
-  // if (typeof(parseInt(pagesField.value)) != "number") {
-  //   alert("Page count must be a number, this isn't high-school algebra");
-  //   return false;
-  // };
   return true;
 };
 
