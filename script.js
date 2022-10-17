@@ -1,18 +1,18 @@
 let myLibrary = [];
 
-function Book(title, author, published, pages, isRead, index) {
-  this.title = title;
-  this.author = author;
-  this.published = published;
-  this.pages = pages;
-  this.isRead = isRead;
-};
+class Book {
+    constructor(title, author, published, pages, isRead) {
+        this.title = title;
+        this.author = author;
+        this.published = published;
+        this.pages = pages;
+        this.isRead = isRead;
+    };
 
-Book.prototype = {
-  // More specifically, toggles the isRead status of the book object
-  toggleIsReadBook() {
-    this.isRead === true ? this.isRead = false : this.isRead = true;
-  }
+    toggleIsReadBook() {
+        this.isRead === true ? this.isRead = false : this.isRead = true;
+    }
+
 };
 
 // get the input fields to play with
@@ -40,124 +40,124 @@ const formFields = document.querySelectorAll("input");
 
 // Add the book to the end of myLibrary
 function addBookToLibrary(book) {
-  myLibrary.push(book);
-  clearLibraryDisplay();
-  displayLibrary();
-  clearFields();
+    myLibrary.push(book);
+    clearLibraryDisplay();
+    displayLibrary();
+    clearFields();
 };
 
 // Make a new Book object using the user input fields
 function getBookInfo() {
-  let newBook = new Book(titleField.value, authorField.value, publishedField.value, pagesField.value, isReadField.checked);
-  return newBook;
+    let newBook = new Book(titleField.value, authorField.value, publishedField.value, pagesField.value, isReadField.checked);
+    return newBook;
 };
 
 // Construct and populates a new "card" containing the information about the book
 function makeCard(book) {
 
-  const newTitle = document.createElement("h3");
-  newTitle.innerText = book.title;
+    const newTitle = document.createElement("h3");
+    newTitle.innerText = book.title;
 
-  const newAuthor = document.createElement("h4");
-  newAuthor.innerText = book.author;
+    const newAuthor = document.createElement("h4");
+    newAuthor.innerText = book.author;
 
-  const newPublished = document.createElement("h5");
-  newPublished.innerText = book.published;
+    const newPublished = document.createElement("h5");
+    newPublished.innerText = book.published;
 
-  const newPages = document.createElement("h6");
-  newPages.innerText = book.pages;
+    const newPages = document.createElement("h6");
+    newPages.innerText = book.pages;
 
-  const remove = document.createElement("button");
-  remove.classList.add("remove");
-  remove.innerText = "X";
+    const remove = document.createElement("button");
+    remove.classList.add("remove");
+    remove.innerText = "X";
 
-  const newIsRead = document.createElement("button");
-  newIsRead.classList.add("is-read-toggle");
-  // Convert isRead boolean to natural language
-  newIsRead.innerText = (book.isRead === true ? "Read" : "Unread");
-  if (book.isRead) {
-    newIsRead.classList.add("read")
-  };
+    const newIsRead = document.createElement("button");
+    newIsRead.classList.add("is-read-toggle");
+    // Convert isRead boolean to natural language
+    newIsRead.innerText = (book.isRead === true ? "Read" : "Unread");
+    if (book.isRead) {
+        newIsRead.classList.add("read");
+    };
 
-  const newCard = document.createElement("div");
-  newCard.classList.add("library-book");
-  // Add them allllll to the card
-  newCard.appendChild(newTitle);
-  newCard.appendChild(newAuthor);
-  newCard.appendChild(newPublished);
-  newCard.appendChild(newPages);
-  newCard.appendChild(newIsRead);
-  newCard.appendChild(remove)
-  // Give the card an index 
-  newCard.setAttribute("data-index", myLibrary.indexOf(book))
-  // Finally, add the card to the display
-  display.appendChild(newCard);
+    const newCard = document.createElement("div");
+    newCard.classList.add("library-book");
+    // Add them allllll to the card
+    newCard.appendChild(newTitle);
+    newCard.appendChild(newAuthor);
+    newCard.appendChild(newPublished);
+    newCard.appendChild(newPages);
+    newCard.appendChild(newIsRead);
+    newCard.appendChild(remove);
+    // Give the card an index 
+    newCard.setAttribute("data-index", myLibrary.indexOf(book));
+    // Finally, add the card to the display
+    display.appendChild(newCard);
 }
 
 // function that gates any clicks on the display element
 function handleDisplayClick(e) {
-  e.stopPropagation();
-  if (e.target.classList.contains("is-read-toggle")) {
-    // Pass the event along to track its target and toggle that specific card
-    toggleIsRead(e);
-  } else if (e.target.classList.contains("remove")) {
-    removeBook(e.target.parentNode.getAttribute("data-index"))
-  };
+    e.stopPropagation();
+    if (e.target.classList.contains("is-read-toggle")) {
+        // Pass the event along to track its target and toggle that specific card
+        toggleIsRead(e);
+    } else if (e.target.classList.contains("remove")) {
+        removeBook(e.target.parentNode.getAttribute("data-index"));
+    };
 };
 
 // changes and updates the displayed isRead and the isRead property on the book
 function toggleIsRead(e) {
-  // First change the object property
-  myLibrary[e.target.parentNode.getAttribute("data-index")].toggleIsReadBook();
-  // Then toggle the class on the div
-  e.target.classList.toggle("read")
-  // Update the button text
-  if (e.target.classList.contains("read")) {
-    e.target.innerText = "Read";
-    return;
-  };
-  e.target.innerText = "Unread";
+    // First change the object property
+    myLibrary[e.target.parentNode.getAttribute("data-index")].toggleIsReadBook();
+    // Then toggle the class on the div
+    e.target.classList.toggle("read");
+    // Update the button text
+    if (e.target.classList.contains("read")) {
+        e.target.innerText = "Read";
+        return;
+    };
+    e.target.innerText = "Unread";
 };
 
 // removes a book from anywhere in the array, updating the display after
 function removeBook(index) {
-  myLibrary.splice(index, 1);
-  clearLibraryDisplay();
-  displayLibrary();
+    myLibrary.splice(index, 1);
+    clearLibraryDisplay();
+    displayLibrary();
 };
 
 // Verify the user data matches the types expected
 function validateForm() {
-  // Check Title
-  if (titleField.value.trim() === "" || authorField.value.trim() === "") {
-    alert("You must enter a Title and Author, at least.");
-    return false;
-  };
-  return true;
+    // Check Title
+    if (titleField.value.trim() === "" || authorField.value.trim() === "") {
+        alert("You must enter a Title and Author, at least.");
+        return false;
+    };
+    return true;
 };
 
 // Update the display with divs containing all the books currently in the Library
 function displayLibrary() {
-  myLibrary.forEach(book => makeCard(book));
+    myLibrary.forEach(book => makeCard(book));
 };
 
 // Reset all user-input fields to blank, except checkbox
 function clearFields() {
-  formFields.forEach(function (field) {
-    field.value = "";
-  });
+    formFields.forEach(function (field) {
+        field.value = "";
+    });
 };
 
 // remove all books from the screen and the myLibrary Array
 function clearLibrary() {
-  clearLibraryDisplay();
-  // Also removed the books from the library Array, hidden from the user.
-  myLibrary = [];
+    clearLibraryDisplay();
+    // Also removed the books from the library Array, hidden from the user.
+    myLibrary = [];
 };
 
 // Remove just the display elements of the library whie leaving the array untrouched
 function clearLibraryDisplay() {
-  while (display.lastElementChild) {
-    display.lastElementChild.remove();
-  };
+    while (display.lastElementChild) {
+        display.lastElementChild.remove();
+    };
 };
